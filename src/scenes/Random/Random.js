@@ -48,7 +48,7 @@ class RandomScene extends Component {
                 <hr/>
 
                 {this.state.url ?
-                    <img src={this.state.url}/>
+                    <img src={this.state.url} alt={'no image'}/>
                     : 'Please press load'
                 }
 
