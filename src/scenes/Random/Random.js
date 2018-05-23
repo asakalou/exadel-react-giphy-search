@@ -1,21 +1,13 @@
 import React, {Component} from 'react';
 import {ajax} from 'rxjs/observable/dom/ajax';
-import * as queryString from "query-string";
-import {loadRandom, loadRandomError, loadRandomSuccess} from "./services/actions";
-import {connect} from "react-redux";
+import * as qs from 'qs';
+import {connect} from 'react-redux';
+import {loadRandom, loadRandomError, loadRandomSuccess} from './services/actions';
 
-const URL = 'http://api.giphy.com/v1/gifs/random';
+const URL = 'https://api.giphy.com/v1/gifs/random';
 const API_KEY = 'JokfEsQ6phaio2LlwNgGHhpBr47QE89e';
 
 class RandomScene extends Component {
-
-    constructor() {
-        super();
-
-        this.state = {
-            url: ''
-        };
-    }
 
     handleLoadRandom = () => {
         this.loadRandom();
@@ -26,7 +18,7 @@ class RandomScene extends Component {
 
         onLoad();
 
-        const params = queryString.stringify({
+        const params = qs.stringify({
             key: API_KEY,
             api_key: API_KEY
         });
