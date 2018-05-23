@@ -1,37 +1,16 @@
 import React, {Component} from 'react';
-import {ajax} from 'rxjs/observable/dom/ajax';
-import * as qs from 'qs';
 import {connect} from 'react-redux';
-import {loadRandom, loadRandomError, loadRandomSuccess} from './services/actions';
+import {loadRandom} from './services/actions';
 
-const URL = 'https://api.giphy.com/v1/gifs/random';
-const API_KEY = 'JokfEsQ6phaio2LlwNgGHhpBr47QE89e';
 
 class RandomScene extends Component {
 
-    handleLoadRandom = () => {
-        this.loadRandom();
+    componentDidMount() {
+        this.props.onLoad();
     }
 
-    loadRandom = () => {
-        const {onSuccess, onError, onLoad} = this.props;
-
-        onLoad();
-
-        const params = qs.stringify({
-            key: API_KEY,
-            api_key: API_KEY
-        });
-
-        return ajax({
-            url: `${URL}?${params}`,
-            method: 'GET',
-            responseType: 'json'
-        }).subscribe(({response}) => {
-            onSuccess(response.data);
-        }, () => {
-            onError();
-        });
+    handleLoadRandom = () => {
+        this.props.onLoad();
     }
 
     render() {
@@ -73,8 +52,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSuccess: (image) => dispatch(loadRandomSuccess(image)),
-        onError: (error) => dispatch(loadRandomError(error)),
         onLoad: () => dispatch(loadRandom())
     }
 };
