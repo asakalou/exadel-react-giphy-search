@@ -1,32 +1,17 @@
 import React, {Component, Fragment} from 'react';
-import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux';
+import {ConnectedRouter} from 'react-router-redux';
 import {Redirect, Route, Switch} from "react-router-dom";
 import createHistory from 'history/createBrowserHistory';
 import RandomScene from "./scenes/Random/Random";
 import HomeScene from "./scenes/Home/Home";
 import NavItem from "./components/NavItem/NavItem";
-import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {Provider} from "react-redux";
-import {reducer as randomReducer} from './scenes/Random/services/reducer';
+import {createAppStore} from './services/store';
 import './App.css';
 
 
 const history = createHistory();
-const routerHistoryMiddleware = routerMiddleware(history);
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    || compose;
-
-const store = createStore(
-    combineReducers({
-        router: routerReducer,
-        random: randomReducer
-    }),
-    composeEnhancers(
-        applyMiddleware(routerHistoryMiddleware)
-    )
-);
-
+const store = createAppStore(history);
 
 class App extends Component {
 
