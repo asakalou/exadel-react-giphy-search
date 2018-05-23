@@ -10,15 +10,16 @@ import {ajax} from 'rxjs/observable/dom/ajax';
 import * as qs from 'qs';
 
 
-const URL = 'https://api.giphy.com/v1/gifs/random';
+const URL = 'https://api.giphy.com/v1/gifs/search';
 const API_KEY = 'JokfEsQ6phaio2LlwNgGHhpBr47QE89e';
 
-const loadRandom = (action$, store) =>
-    action$.ofType(actions.LOAD_RANDOM)
+const queryChange = (action$, store) =>
+    action$.ofType(actions.HOME_QUERY_CHANGE)
         .switchMap(action => {
             const params = qs.stringify({
                 key: API_KEY,
-                api_key: API_KEY
+                api_key: API_KEY,
+                q: action.payload.query
             });
 
             return ajax({
@@ -27,14 +28,14 @@ const loadRandom = (action$, store) =>
                 responseType: 'json'
             }).map(({response}) => {
                 console.log(response);
-                return actions.loadRandomSuccess(response.data);
+                return actions.homeItemsLoadSuccess(response.data);
             }).catch(error => {
-                return Observable.of(actions.loadRandomError('An error!'));
+                return Observable.of(actions.homeItemsLoadError('An error!'));
             }).takeUntil(
-                action$.ofType(actions.LOAD_RANDOM_CANCEL)
+                action$.ofType(actions.HOME_ITEMS_LOAD_CANCEL)
             );
         });
 
 export default combineEpics(
-    loadRandom
+    queryChange
 )

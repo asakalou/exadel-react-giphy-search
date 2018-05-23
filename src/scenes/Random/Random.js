@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {loadRandom} from './services/actions';
+import {loadRandom, loadRandomCancel} from './services/actions';
 
 
 class RandomScene extends Component {
 
     componentDidMount() {
         this.props.onLoad();
+    }
+
+    componentWillUnmount() {
+        this.props.onCancel();
     }
 
     handleLoadRandom = () => {
@@ -52,7 +56,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLoad: () => dispatch(loadRandom())
+        onLoad: () => dispatch(loadRandom()),
+        onCancel: () => dispatch(loadRandomCancel())
     }
 };
 
