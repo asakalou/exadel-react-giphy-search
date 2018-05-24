@@ -15,7 +15,7 @@ const createTestScheduler = () => new TestScheduler((actual, expected) =>
     expect(actual).toEqual(expected));
 
 
-const expectEpic = (epic, dependencies, store, actions, beforeCallback) => {
+const expectEpic = (epic, dependencies, store, actions) => {
     const testScheduler = createTestScheduler();
 
     const epicDependencies = {
@@ -24,10 +24,6 @@ const expectEpic = (epic, dependencies, store, actions, beforeCallback) => {
     };
 
     testScheduler.run(({expectObservable, hot}) => {
-        if (beforeCallback) {
-            beforeCallback(testScheduler);
-        }
-
         const action$ = new ActionsObservable(
             hot(actions.i.t, actions.i.a)
         );
