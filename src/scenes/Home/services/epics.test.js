@@ -4,7 +4,6 @@ import {queryChange} from "./epics";
 import {expectEpic} from "../../../testUtils/epics";
 import * as actions from './actions';
 
-
 describe('homeEpics', () => {
 
     describe('queryChange', () => {
@@ -28,6 +27,12 @@ describe('homeEpics', () => {
         });
 
         it('should dispatch homeItemsLoadSuccess', () => {
+            dependencies.api.search.mockReturnValue(of({
+                response: {
+                    data: [{id: 1}, {id: 2}]
+                }
+            }));
+
             expectEpic(
                 queryChange,
                 dependencies,
@@ -43,13 +48,6 @@ describe('homeEpics', () => {
                             b: actions.homeItemsLoadSuccess([{id: 1}, {id: 2}])
                         }
                     }
-                },
-                (scheduler) => {
-                    dependencies.api.search.mockReturnValue(of({
-                        response: {
-                            data: [{id: 1}, {id: 2}]
-                        }
-                    }));
                 }
             );
 
@@ -58,6 +56,8 @@ describe('homeEpics', () => {
         });
 
         it('should dispatch homeItemsLoadError', () => {
+            dependencies.api.search.mockReturnValue(throwError('Errrror!'));
+
             expectEpic(
                 queryChange,
                 dependencies,
@@ -73,9 +73,6 @@ describe('homeEpics', () => {
                             b: actions.homeItemsLoadError('An error!')
                         }
                     }
-                },
-                (scheduler) => {
-                    dependencies.api.search.mockReturnValue(throwError('Errrror!'));
                 }
             );
 
@@ -84,33 +81,31 @@ describe('homeEpics', () => {
         });
 
         it('should dispatch homeItemsLoadSuccess just once', () => {
+            dependencies.api.search.mockReturnValue(of({
+                response: {
+                    data: [{id: 1}, {id: 2}]
+                }
+            }).pipe(delay(4)));
+
             expectEpic(
                 queryChange,
                 dependencies,
                 store,
                 {
                     i: {
-                        t: '-a--', a: {
-                            a: actions.homeQueryChange('my dog is cute'),
-                            b: actions.homeQueryChange('my dog is cute')
+                        t: 'aaa--', a: {
+                            a: actions.homeQueryChange('my dog is cute')
                         }
                     },
                     o: {
-                        t: '---c', a: {
+                        t: '------c', a: {
                             c: actions.homeItemsLoadSuccess([{id: 1}, {id: 2}])
                         }
                     }
-                },
-                (scheduler) => {
-                    dependencies.api.search.mockReturnValue(of({
-                        response: {
-                            data: [{id: 1}, {id: 2}]
-                        }
-                    }).pipe(delay(20, scheduler)));
                 }
             );
 
-            expect(dependencies.api.search.mock.calls.length).toBe(1);
+            expect(dependencies.api.search.mock.calls.length).toBe(3);
             expect(dependencies.api.search.mock.calls[0][0]).toBe('my dog is cute');
         });
 

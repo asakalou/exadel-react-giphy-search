@@ -14,33 +14,26 @@ const frames = (n, unit = '-') => {
 const createTestScheduler = () => new TestScheduler((actual, expected) =>
     expect(actual).toEqual(expected));
 
-function createTestActionFromMarbles(testScheduler, marbles, values) {
-    return new ActionsObservable(testScheduler.createHotObservable(marbles, values));
-}
 
 const expectEpic = (epic, dependencies, store, actions, beforeCallback) => {
     const testScheduler = createTestScheduler();
-
-    const action$ = createTestActionFromMarbles(
-        testScheduler,
-        actions.i.t,
-        actions.i.a
-    );
 
     const epicDependencies = {
         ...dependencies,
         scheduler: testScheduler
     };
 
-    if (beforeCallback) {
-        beforeCallback(testScheduler);
-    }
+    testScheduler.run(({expectObservable, hot}) => {
+        if (beforeCallback) {
+            beforeCallback(testScheduler);
+        }
 
-
-    const output = epic(action$, store, epicDependencies);
-
-    testScheduler.expectObservable(output).toBe(actions.o.t, actions.o.a);
-    testScheduler.flush();
+        const action$ = new ActionsObservable(
+            hot(actions.i.t, actions.i.a)
+        );
+        const output = epic(action$, store, epicDependencies);
+        expectObservable(output).toBe(actions.o.t, actions.o.a);
+    });
 };
 
 export {
