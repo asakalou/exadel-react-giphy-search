@@ -1,13 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import {ConnectedRouter} from 'react-router-redux';
-import {Redirect, Route, Switch} from "react-router-dom";
 import createHistory from 'history/createBrowserHistory';
-import RandomScene from "./scenes/Random/Random";
-import HomeScene from "./scenes/Home/Home";
-import NavItem from "./components/NavItem/NavItem";
 import {Provider} from "react-redux";
 import {createAppStore} from './services/store';
 import './App.css';
+import Main from "./main/Main";
 
 
 const history = createHistory();
@@ -24,20 +21,7 @@ class App extends Component {
             <div className="App">
                 <Provider store={store}>
                     <ConnectedRouter history={history}>
-                        <Fragment>
-                            <ol>
-                                <li><NavItem to={'/random'}>Random</NavItem></li>
-                                <li><NavItem to={'/home'}>Home</NavItem></li>
-                            </ol>
-
-                            <Switch>
-                                <Route exact path="/" component={RandomScene}/>
-                                <Route path={'/random'} component={RandomScene}/>
-                                <Route path={'/home'} component={HomeScene}/> : null
-
-                                <Redirect to={'/'}/>
-                            </Switch>
-                        </Fragment>
+                        <Main/>
                     </ConnectedRouter>
                 </Provider>
             </div>

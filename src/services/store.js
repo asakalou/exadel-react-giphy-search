@@ -3,9 +3,11 @@ import {applyMiddleware, compose, createStore} from "redux";
 import combineReducers from "redux/src/combineReducers";
 import {reducer as randomReducer} from '../scenes/Random/services/reducer';
 import {reducer as homeReducer} from '../scenes/Home/services/reducer';
+import {reducer as loginReducer} from '../scenes/Login/services/reducer';
 import {createEpicMiddleware, combineEpics} from 'redux-observable';
 import randomEpic from '../scenes/Random/services/epics';
 import homeEpic from '../scenes/Home/services/epics';
+import api from './api';
 
 
 export const createAppStore = (history) => {
@@ -19,7 +21,11 @@ export const createAppStore = (history) => {
         homeEpic
     );
 
-    const epicMiddleware = createEpicMiddleware(rootEpic);
+    const epicMiddleware = createEpicMiddleware(rootEpic, {
+        dependencies: {
+            api
+        }
+    });
 
     return createStore(
         // creating a global reducer for an app with combineReducers
@@ -27,7 +33,8 @@ export const createAppStore = (history) => {
         combineReducers({
             router: routerReducer,
             random: randomReducer,
-            home: homeReducer
+            home: homeReducer,
+            auth: loginReducer
         }),
         composeEnhancers(
             applyMiddleware(

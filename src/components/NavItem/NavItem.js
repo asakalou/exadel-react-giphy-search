@@ -7,9 +7,9 @@ const NavItem = withRouter(({match, location, history, to, children}) => {
     };
     const isActive = location.pathname === to;
     return (
-        <button
+        <a
             className={isActive ? 'active' : null}
-            onClick={onClick}>{children}</button>
+            onClick={onClick}>{children}</a>
     );
 });
 

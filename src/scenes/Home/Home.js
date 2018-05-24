@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import * as actions from './services/actions';
 
-class HomeScene extends Component {
+export class HomeScene extends Component {
+
+    componentDidMount() {
+        this.props.onQueryChange('Dog');
+    }
 
     handleChange = (event) => {
         this.props.onQueryChange(event.target.value);
@@ -15,12 +19,14 @@ class HomeScene extends Component {
             <div>
                 <h1>Home</h1>
 
-                <input onChange={this.handleChange} value={query}/>
+                <input className={'query'} onChange={this.handleChange} value={query}/>
+
+
 
                 <hr/>
 
-                {loading ? 'Loading!' : null}
-                {error ? 'Error!' : null}
+                {loading ? <div className={'loading'}>Loading!</div> : null}
+                {error ? <div className={'error'}>{error}</div> : null}
 
                 <ul>
                     {
