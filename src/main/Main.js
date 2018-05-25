@@ -6,6 +6,8 @@ import NavItem from "../components/NavItem/NavItem";
 import {connect} from "react-redux";
 import Login from "../scenes/Login/Login";
 import * as actions from './services/actions';
+import * as authActions from '../scenes/Login/services/actions';
+import {UserBar} from "./components/UserBar/UserBar";
 
 export class Main extends Component {
 
@@ -13,11 +15,21 @@ export class Main extends Component {
         this.props.onAppInit();
     }
 
+    handleLogout = () => {
+        this.props.onLogout();
+    }
+
     render() {
-        const {user, loggedIn} = this.props;
+        const {user, loggedIn, initializing, error} = this.props;
+
+        if (error) {
+            return <div>{error}</div>;
+        }
 
         return (
             <div>
+                {initializing ? 'Loading!' : null}
+
                 <div className="app-header">
                     <div className="app-header__logo">
                         GIPHY Search
@@ -25,10 +37,14 @@ export class Main extends Component {
                     <ul className="app-header__navigation">
                         <li><NavItem to={'/random'}>Random</NavItem></li>
                         <li><NavItem to={'/home'}>Home</NavItem></li>
-                        {!loggedIn ?
+                        {!loggedIn && !initializing ?
                             <li><NavItem to={'/login'}>Login</NavItem></li> : null
                         }
                     </ul>
+                    {loggedIn ?
+                        <UserBar user={user} onLogout={this.handleLogout}/> : null
+                    }
+
                 </div>
 
                 <Switch>
@@ -36,7 +52,7 @@ export class Main extends Component {
                     <Route path={'/random'} component={RandomScene}/>
                     <Route path={'/home'} component={HomeScene}/> : null
 
-                    {!loggedIn ?
+                    {!loggedIn && !initializing ?
                         <Route path={'/login'} component={Login}/> : null
                     }
 
@@ -51,16 +67,20 @@ export class Main extends Component {
 
 const mapStateToProps = (state) => {
     const {user, loggedIn} = state.auth;
+    const {initializing, error} = state.main;
 
     return {
         user,
-        loggedIn
+        loggedIn,
+        initializing,
+        error
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAppInit: () => dispatch(actions.initApp())
+        onAppInit: () => dispatch(actions.initApp()),
+        onLogout: () => dispatch(authActions.logout())
     };
 };
 
