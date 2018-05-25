@@ -35,6 +35,14 @@ export const reducer = (state = defaultState, action) => {
             };
         }
 
+        case actions.LOGOUT_SUCCESS: {
+            return {
+                ...state,
+                user: null,
+                loggedIn: false
+            };
+        }
+
         case appActions.INIT_APP_SUCCESS: {
             const {user} = action.payload;
 

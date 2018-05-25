@@ -66,7 +66,7 @@ export class Main extends Component {
                         <Route path={'/login'} component={Login}/> : null
                     }
 
-                    <Redirect to={'/'}/>
+                    <Redirect to={'/random'}/>
                 </Switch>
             </div>
         );

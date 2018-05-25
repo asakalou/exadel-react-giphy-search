@@ -11,7 +11,6 @@ export const login = (action$, store, {api}) =>
             return api.login(username, password)
                 .pipe(
                     map(response => {
-                        console.log(response);
                         const {email, uid} = response.user;
                         return actions.loginSuccess(
                             {
@@ -21,7 +20,6 @@ export const login = (action$, store, {api}) =>
                         );
                     }),
                     catchError(error => {
-                        console.log('login error');
                         return of(actions.loginError('An error!'));
                     })
                 );

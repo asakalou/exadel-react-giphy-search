@@ -8,7 +8,6 @@ const loadRandom = (action$, store, {api}) =>
         switchMap(action => {
             return api.random().pipe(
                 map(({response}) => {
-                    console.log(response);
                     return actions.loadRandomSuccess(response.data);
                 }),
                 catchError(error => {
