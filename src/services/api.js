@@ -1,4 +1,4 @@
-import {from} from 'rxjs';
+import {from, ReplaySubject} from 'rxjs';
 import {ajax} from 'rxjs/ajax';
 import * as firebase from 'firebase';
 import * as qs from 'qs';
@@ -64,8 +64,12 @@ const api = {
         );
     },
 
-    isLoggedIn: () => {
-        return !!firebase.auth().user;
+
+    getUser: () => {
+        const observer = new ReplaySubject(1);
+        firebase.auth().onAuthStateChanged(observer);
+
+        return observer;
     }
 
 };

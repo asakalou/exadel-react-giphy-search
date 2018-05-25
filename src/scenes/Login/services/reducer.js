@@ -1,4 +1,5 @@
 import * as actions from './actions';
+import * as appActions from '../../../main/services/actions';
 
 const defaultState = {
     user: null,
@@ -20,6 +21,7 @@ export const reducer = (state = defaultState, action) => {
         case actions.LOGIN_SUCCESS: {
             return {
                 ...state,
+                user: action.payload.user,
                 loading: false,
                 loggedIn: true
             };
@@ -30,6 +32,16 @@ export const reducer = (state = defaultState, action) => {
                 ...state,
                 loading: false,
                 error: action.error
+            };
+        }
+
+        case appActions.INIT_APP_SUCCESS: {
+            const {user} = action.payload;
+
+            return {
+                ...state,
+                loggedIn: !!user,
+                user
             };
         }
 

@@ -12,7 +12,13 @@ export const login = (action$, store, {api}) =>
                 .pipe(
                     map(response => {
                         console.log(response);
-                        return actions.loginSuccess(response.data);
+                        const {email, uid} = response.user;
+                        return actions.loginSuccess(
+                            {
+                                email,
+                                uid
+                            }
+                        );
                     }),
                     catchError(error => {
                         console.log('login error');
