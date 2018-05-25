@@ -8,11 +8,9 @@ export const appInit = (action$, store, {api}) =>
         switchMap(action => {
             return api.getUser().pipe(
                 map(u => {
+                    const user = u ? {username: u.username, uid: u.uid} : null;
                     return actions.initAppSuccess({
-                        user: {
-                            username: u.username,
-                            uid: u.uid
-                        }
+                        user
                     });
                 })
             );
