@@ -7,6 +7,7 @@ import {reducer as loginReducer} from '../scenes/Login/services/reducer';
 import {createEpicMiddleware, combineEpics} from 'redux-observable';
 import randomEpic from '../scenes/Random/services/epics';
 import homeEpic from '../scenes/Home/services/epics';
+import authEpic from '../scenes/Login/services/epics';
 import api from './api';
 
 
@@ -18,7 +19,8 @@ export const createAppStore = (history) => {
 
     const rootEpic = combineEpics(
         randomEpic,
-        homeEpic
+        homeEpic,
+        authEpic
     );
 
     const epicMiddleware = createEpicMiddleware(rootEpic, {

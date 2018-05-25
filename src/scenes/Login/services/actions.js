@@ -15,8 +15,37 @@ export const login = (username, password) => {
     }
 };
 
+export const loginSuccess = (user) => {
+    return {
+        type: LOGIN_SUCCESS,
+        payload: {
+            user
+        }
+    }
+};
+
+export const loginError = (error) => {
+    return {
+        type: LOGIN_ERROR,
+        error
+    }
+};
+
 export const logout = () => {
     return {
         type: LOGOUT
+    }
+};
+
+export const logoutSuccess = () => {
+    return {
+        type: LOGOUT_SUCCESS
+    }
+};
+
+export const logoutError = (error) => {
+    return {
+        type: LOGOUT_ERROR,
+        error
     }
 };

@@ -1,8 +1,7 @@
 import {combineEpics} from 'redux-observable';
 import {of} from 'rxjs';
-import {catchError, map, switchMap, takeUntil} from 'rxjs/operators';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import * as actions from './actions';
-
 
 export const login = (action$, store, {api}) =>
     action$.ofType(actions.LOGIN).pipe(
@@ -11,13 +10,14 @@ export const login = (action$, store, {api}) =>
 
             return api.login(username, password)
                 .pipe(
-                    map(({response}) => {
+                    map(response => {
+                        console.log(response);
                         return actions.loginSuccess(response.data);
                     }),
                     catchError(error => {
+                        console.log('login error');
                         return of(actions.loginError('An error!'));
-                    }),
-                    takeUntil(action$.ofType(actions.LOGIN_CANCELLED))
+                    })
                 );
         })
     );
@@ -25,17 +25,15 @@ export const login = (action$, store, {api}) =>
 export const logout = (action$, store, {api}) =>
     action$.ofType(actions.LOGOUT).pipe(
         switchMap(action => {
-
-            return api.logout();
-                // .pipe(
-                //     map(({response}) => {
-                //         return actions.logout(response.data);
-                //     }),
-                //     catchError(error => {
-                //         return of(actions.loginError('An error!'));
-                //     }),
-                //     takeUntil(action$.ofType(actions.LOGIN_CANCELLED))
-                // );
+            return api.logout()
+                .pipe(
+                    map(response => {
+                        return actions.logoutSuccess();
+                    }),
+                    catchError(error => {
+                        return of(actions.logoutError('An error!'));
+                    })
+                );
         })
     );
 

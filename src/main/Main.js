@@ -25,6 +25,9 @@ export class Main extends Component {
                     <ul className="app-header__navigation">
                         <li><NavItem to={'/random'}>Random</NavItem></li>
                         <li><NavItem to={'/home'}>Home</NavItem></li>
+                        {!loggedIn ?
+                            <li><NavItem to={'/login'}>Login</NavItem></li> : null
+                        }
                     </ul>
                 </div>
 
