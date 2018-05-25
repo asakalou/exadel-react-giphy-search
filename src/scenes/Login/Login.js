@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import * as actions from './services/actions';
 
 class Login extends Component {
 
@@ -25,7 +26,7 @@ class Login extends Component {
     }
 
     handleSubmit = (event) => {
-        event.stopPropagation();
+        event.preventDefault();
 
         this.props.onLogin(this.state.username, this.state.password);
     }
@@ -64,15 +65,17 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => {
+    const {loading, error} = state.auth;
     return {
-
-    }
+        loading,
+        error
+    };
 };
 
-const mapDispatchToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-
-    }
+        onLogin: (u, p) => dispatch(actions.login(u, p))
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
