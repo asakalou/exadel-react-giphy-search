@@ -8,6 +8,7 @@ import Login from "../scenes/Login/Login";
 import * as actions from './services/actions';
 import * as authActions from '../scenes/Login/services/actions';
 import {UserBar} from "./components/UserBar/UserBar";
+import FavouritesScene from "../scenes/Favourites/Favourites";
 
 export class Main extends Component {
 
@@ -37,6 +38,11 @@ export class Main extends Component {
                     <ul className="app-header__navigation">
                         <li><NavItem to={'/random'}>Random</NavItem></li>
                         <li><NavItem to={'/home'}>Home</NavItem></li>
+
+                        {loggedIn ?
+                            <li><NavItem to={'/favourites'}>Favourites</NavItem></li> : null
+                        }
+
                         {!loggedIn && !initializing ?
                             <li><NavItem to={'/login'}>Login</NavItem></li> : null
                         }
@@ -51,6 +57,10 @@ export class Main extends Component {
                     <Route exact path="/" component={RandomScene}/>
                     <Route path={'/random'} component={RandomScene}/>
                     <Route path={'/home'} component={HomeScene}/> : null
+
+                    {loggedIn ?
+                        <Route path={'/favourites'} component={FavouritesScene}/> : null
+                    }
 
                     {!loggedIn && !initializing ?
                         <Route path={'/login'} component={Login}/> : null

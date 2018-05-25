@@ -5,6 +5,7 @@
   "dependencies": {
     "firebase": "^5.0.3",
     "history": "^4.7.2",
+    "prop-types": "^15.6.1",
     "qs": "^6.5.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -12,6 +13,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "1.1.4",
+    "react-styleguidist": "^7.0.14",
     "redux": "^4.0.0",
     "redux-observable": "^0.18.0",
     "rxjs": "^6.2.0",
@@ -21,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build"
   },
   "devDependencies": {
     "enzyme": "^3.3.0",
