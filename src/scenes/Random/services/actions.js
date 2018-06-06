@@ -2,6 +2,7 @@ export const LOAD_RANDOM = 'LOAD_RANDOM';
 export const LOAD_RANDOM_SUCCESS = 'LOAD_RANDOM_SUCCESS';
 export const LOAD_RANDOM_ERROR = 'LOAD_RANDOM_ERROR';
 export const LOAD_RANDOM_CANCEL = 'LOAD_RANDOM_CANCEL';
+export const START_TIMER = 'START_TIMER';
 
 export const loadRandom = () => {
     return {
@@ -28,5 +29,11 @@ export const loadRandomError = (error) => {
 export const loadRandomCancel = () => {
     return {
         type: LOAD_RANDOM_CANCEL
+    };
+};
+
+export const startTimer = () => {
+    return {
+        type: START_TIMER
     };
 };

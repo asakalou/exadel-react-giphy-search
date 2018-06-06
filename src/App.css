@@ -1,5 +1,5 @@
-.App {
-
+body {
+    background: #37474F;
 }
 
 .active {
@@ -8,8 +8,7 @@
 
 .app-header {
     display: flex;
-
-    border-bottom: 1px solid #eee;
+    color: #fff;
 }
 
 .app-header__logo {

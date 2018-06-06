@@ -1,0 +1,27 @@
+.random-scene {
+    text-align: center;
+
+}
+
+.load-random-btn {
+    background-color: transparent; /* Green */
+    border: 2px solid #36fafa;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.load-random-btn:hover {
+    background-color: #36fafa;
+    transition: 0.3s;
+
+}
+
+.random-img {
+    margin-bottom: 10px;
+}
