@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import * as actions from './services/actions';
+import './Home.css';
 
 export class HomeScene extends Component {
 
@@ -16,29 +17,26 @@ export class HomeScene extends Component {
         const {query, loading, error, items} = this.props;
 
         return (
-            <div>
-                <h1>Home</h1>
+            <div className="home-scene">
 
-                <input className={'query'} onChange={this.handleChange} value={query}/>
+                <div className="search-form">
+                    <input className={'query'} onChange={this.handleChange} value={query}/>
+                </div>
 
-
-
-                <hr/>
 
                 {loading ? <div className={'loading'}>Loading!</div> : null}
                 {error ? <div className={'error'}>{error}</div> : null}
 
-                <ul>
-                    {
-                        items && items.map((item, index) => {
+                <div>
+                    {   items && items.map((item, index) => {
                             return (
-                                <li key={item.id}>
+                                <div key={item.id}>
                                     <img src={item.images.original.url} alt={'No Image!'}/>
-                                </li>
+                                </div>
                             );
                         })
                     }
-                </ul>
+                </div>
             </div>
         );
     }

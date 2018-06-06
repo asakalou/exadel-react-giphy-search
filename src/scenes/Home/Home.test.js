@@ -4,13 +4,6 @@ import {HomeScene} from "./Home";
 
 describe('<HomeScene/>', () => {
 
-    it('should render', () => {
-        const onQueryChange = jest.fn();
-        const wrapper = shallow(<HomeScene onQueryChange={onQueryChange}/>);
-
-        expect(wrapper.find('h1').text()).toBe('Home');
-    });
-
     it('should render error', () => {
         const onQueryChange = jest.fn();
         const wrapper = shallow(<HomeScene onQueryChange={onQueryChange}/>);

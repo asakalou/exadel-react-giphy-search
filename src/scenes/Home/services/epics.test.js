@@ -38,16 +38,12 @@ describe('homeEpics', () => {
                 dependencies,
                 store,
                 {
-                    i: {
-                        t: '-a---', a: {
+                    i: {t: '-a---', a: {
                             a: actions.homeQueryChange('my dog is cute')
-                        }
-                    },
-                    o: {
-                        t: '-b---', a: {
+                        }},
+                    o: {t: '-b---', a: {
                             b: actions.homeItemsLoadSuccess([{id: 1}, {id: 2}])
-                        }
-                    }
+                        }}
                 }
             );
 
