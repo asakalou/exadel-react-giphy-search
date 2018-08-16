@@ -1,11 +1,11 @@
 import {combineEpics} from 'redux-observable';
 import {of, interval} from 'rxjs';
-import {catchError, map, switchMap, mergeMap, takeUntil} from 'rxjs/operators';
+import {catchError, map, switchMap, takeUntil} from 'rxjs/operators';
 import * as actions from './actions';
 
 export const loadRandom = (action$, store, {api}) =>
     action$.ofType(actions.LOAD_RANDOM).pipe(
-        mergeMap(action => {
+        switchMap(action => {
             return api.random().pipe(
                 map(({response}) => {
                     return actions.loadRandomSuccess(response.data);

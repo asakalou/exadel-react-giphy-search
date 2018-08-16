@@ -6,7 +6,7 @@ import './Home.css';
 export class HomeScene extends Component {
 
     componentDidMount() {
-        this.props.onQueryChange('Dog');
+        this.props.onQueryChange('Hello');
     }
 
     handleChange = (event) => {
