@@ -20,7 +20,11 @@ export class HomeScene extends Component {
             <div className="home-scene">
 
                 <div className="search-form">
-                    <input className={'query'} onChange={this.handleChange} value={query}/>
+                    <input
+                        className={'query'}
+                        onChange={this.handleChange}
+                        value={query}
+                    />
                 </div>
 
 
@@ -28,13 +32,13 @@ export class HomeScene extends Component {
                 {error ? <div className={'error'}>{error}</div> : null}
 
                 <div>
-                    {   items && items.map((item, index) => {
-                            return (
-                                <div key={item.id}>
-                                    <img src={item.images.original.url} alt={'No Image!'}/>
-                                </div>
-                            );
-                        })
+                    {items && items.map((item, index) => {
+                        return (
+                            <div key={item.id}>
+                                <img src={item.images.original.url} alt={'No Image!'}/>
+                            </div>
+                        );
+                    })
                     }
                 </div>
             </div>

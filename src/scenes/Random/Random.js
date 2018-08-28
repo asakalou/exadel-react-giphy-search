@@ -4,7 +4,7 @@ import {loadRandom, loadRandomCancel, startTimer} from './services/actions';
 import './Random.css';
 
 
-class RandomScene extends Component {
+export class RandomScene extends Component {
 
     componentDidMount() {
         this.props.onLoad();
@@ -40,7 +40,7 @@ class RandomScene extends Component {
 
                 <div>
                     <button
-                        className="load-random-btn"
+                        className="load-random-btn onLoad"
                         onClick={this.handleLoadRandom}>
                         Another please!
                     </button>

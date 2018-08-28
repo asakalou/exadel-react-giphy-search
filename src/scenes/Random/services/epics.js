@@ -22,7 +22,8 @@ export const startTimer = (action$, store) =>
     action$.ofType(actions.START_TIMER).pipe(
         switchMap(action => {
             return interval(5000).pipe(
-                map(() => actions.loadRandom())
+                map(() => actions.loadRandom()),
+                takeUntil(action$.ofType(actions.LOAD_RANDOM_CANCEL))
             );
         })
     );
