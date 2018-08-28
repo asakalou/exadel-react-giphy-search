@@ -4,9 +4,11 @@ import combineReducers from "redux/src/combineReducers";
 import {reducer as randomReducer} from '../scenes/Random/services/reducer';
 import {reducer as homeReducer} from '../scenes/Home/services/reducer';
 import {reducer as mainReducer} from '../main/services/reducer';
+import {reducer as authReducer} from '../scenes/Auth/services/reducer';
 import {combineEpics, createEpicMiddleware} from 'redux-observable';
 import randomEpic from '../scenes/Random/services/epics';
 import homeEpic from '../scenes/Home/services/epics';
+import authEpic from '../scenes/Auth/services/epics';
 import api from './api';
 
 
@@ -18,7 +20,8 @@ export const createAppStore = (history) => {
 
     const rootEpic = combineEpics(
         randomEpic,
-        homeEpic
+        homeEpic,
+        authEpic
     );
 
     const epicMiddleware = createEpicMiddleware({
@@ -31,12 +34,19 @@ export const createAppStore = (history) => {
         router: routerReducer,
         random: randomReducer,
         home: homeReducer,
-        main: mainReducer
+        main: mainReducer,
+        auth: authReducer
     });
+
+    const reducer = (state, action) => {
+        const newState = state;
+        console.log('proxy reducer');
+        return rootReducer(newState, action)
+    };
 
     const store = createStore(
         // creating a global reducer for an app with combineReducers
-        rootReducer,
+        reducer,
 
         composeEnhancers(
             applyMiddleware(
